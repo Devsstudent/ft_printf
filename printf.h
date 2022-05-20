@@ -12,6 +12,7 @@
 #ifndef PRINTF_H 
 # define PRINTF_H
 
+# define TYPE_POSSIBLE 9
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -21,14 +22,10 @@ typedef enum {
 	true = 1
 }	t_Bool;
 
-typedef struct s_string_list {
-	char					*content;
+typedef struct s_storage {
+	void					*content;
 	t_Bool					to_calc;
-	char					c;
-	long long int			nb;
-	char					*str;
-	struct s_string_list	*next;
-}							t_str_l;
+}							t_storage;
 
 t_Bool	ft_check_end(char c);
 void	ft_implement(char *string, va_list ap);
