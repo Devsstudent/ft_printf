@@ -24,7 +24,7 @@ typedef enum {
 
 typedef struct s_storage {
 	void					*content;
-	t_Bool					to_calc;
+	t_Bool					space_after;
 }							t_storage;
 
 t_Bool	ft_check_end(char c);
