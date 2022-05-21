@@ -29,7 +29,7 @@ void	ft_loop(char *string, va_list ap)
 
 t_Bool	ft_check_end(char c)
 {
-	if (c == 'i' || c == 'd' || c == 'u' || c == 'i' || c == 'p' || c == 's')
+	if (c == 'i' || c == 'd' || c == 'u' || c == 'p' || c == 's')
 		return (true);
 	else if (c == 'c' || c == 'x' || c == 'X' || c == '%')
 		return (true);
@@ -39,9 +39,38 @@ t_Bool	ft_check_end(char c)
 char	*ft_brows(t_storage str, va_list ap)
 {
 	char type;
+	int	i;
 
-	if (ft_handle_err(t_storage str))
-		return (str->content);
+	i = 1;
+/*	if (ft_handle_err(t_storage str))
+		return (str->content);*/
+	if (str->content[i] == '%')
+	{
+		write(STDOUT_FILENO, "%", 1);
+		return (str->content + i);
+	}
+	while (!ft_check_end(str->content[i]))
+	{
+		if (str->content[i] == 'i' || str->content[i] == 'd')
+			ft_manage_int(str, va_arg(ap, int));
+		if (str->content[i] == 'x' || str->content[i] == 'X')
+			ft_manage_hexa(str, va_arg(ap, unsigned int));
+		if (str->content[i] == 'u')
+			ft_manage_unsigned(str, va_arg(ap, unsigned int));
+		if (str->content[i] == 's')
+			ft_manage_string(str, va_arg(ap, (char *)));
+		if (str->content[i] == 'c')
+			ft_manage_char(str, va_arg(ap, char));
+		if (str->content[i] == 'p')
+			ft_manage_addr(str, va_arg(ap, (void *)));
+		i++;
+	}
+	return (str->content + i);
+}
+
+
+		
+
 	// -1) Special case ( +-# or number)
 
 	// -2) Get the value in ap from the last letter of content (3 possibilies) a lot of if;
@@ -53,4 +82,3 @@ char	*ft_brows(t_storage str, va_list ap)
 //	ft_special_case(str->content); (+- #0)
 //	display value in struct. depending of the type maybe an enum to store it or something,
 
-}

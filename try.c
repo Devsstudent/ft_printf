@@ -1,4 +1,4 @@
 int	main(void)
 {
-	printf("%i", 1,2);
+	printf("% 3.1i", 20);
 }
