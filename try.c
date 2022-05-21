@@ -1,4 +1,6 @@
 int	main(void)
 {
-	printf("%.2i", 123);
+	void *test= "tt";
+	printf("%lu", (unsigned long) test);
+	printf("%p",  test);
 }

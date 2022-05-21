@@ -22,7 +22,7 @@ void	ft_loop(char *string, va_list ap)
 		if (*string == '%')
 			string = ft_brows(handle, ap);
 		else
-			write(STDOUT_FILENO, string, 1);
+			ft_putchar(*string);
 		string++;
 	}
 }

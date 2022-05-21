@@ -12,10 +12,11 @@
 #ifndef PRINTF_H 
 # define PRINTF_H
 
-# define TYPE_POSSIBLE 9
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+# define BASE_L "0123456780abcdef"
+# define BASE_U "0123456780ABCDEF"
 
 typedef enum {
 	false = 0,

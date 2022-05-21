@@ -22,3 +22,19 @@ int	ft_power(long number, int power)
 	else
 		return (number * ft_power(number, power - 1));
 }
+
+void	ft_putchar(char c)
+{
+	write(STDOUT_FILENO, &c, 1);
+}
+
+void	ft_putnbr_addr(unsigned long nb)
+{
+	if (nb < 16)
+	{
+		ft_putchar(BASE_L[nb]);
+		return ;
+	}
+	ft_putnbr(nb / 16);
+	ft_putchar(BASE_L[nb % 16]);
+}

@@ -51,11 +51,37 @@ t_Bool	ft_check_space(char *str, int index)
 	return (false)
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_special(char *s, char *pattern))
 {
 	size_t	size;
+	int	i;
+	char	*to_free
+	int	len;
+	int	buff_idx;
 
 	size = 0;
+	i = 0;
+	while (pattern[i] != '\0')
+	{
+		if (pattern[i] == '.' && pattern[i + 1] == 's')
+			return (0);
+		if (pattern[i] == '.' && ft_is_digit(pattern[i + 1]))
+		{
+			buff_idx = i++;
+			while (ft_is_digit(pattern[i]))
+			{
+				len++;
+				i++;
+			}
+			to_free = ft_substr(pattern, buff_idx, len);
+			size = ft_atoi(to_free);
+			free(to_free);
+			if (size < 0)
+				size = 0;
+			return (size);
+		}
+		i++;
+	}
 	while (s[size] != '\0')
 		size++;
 	return (size);
