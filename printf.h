@@ -29,5 +29,6 @@ typedef struct s_storage {
 
 t_Bool	ft_check_end(char c);
 void	ft_implement(char *string, va_list ap);
+int	ft_power(long number, int power);
 
 #endif
