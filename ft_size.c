@@ -42,7 +42,7 @@ int	ft_calc_hexa_size(char *str, unsigned value)
 	int			i;
 	long		buff;
 
-	index = ft_calc_number_size((int) value) - 1;
+	index = ft_calc_number_size(str, (int) value) - 1;
 	val = value;
 	buff = val;
 	i = 0;

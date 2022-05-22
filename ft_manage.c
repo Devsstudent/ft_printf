@@ -9,67 +9,79 @@
 /*   Updated: 2022/05/21 14:55:21 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "printf.h"
 
 //ft_calc_number_sizeS
 //ft_calc_hexa_size
 	//CARE OF SIGN if negative compte it in size
 	//Precison need to be calc too
 
-void	ft_manage_int(t_storage str, int value)
+void	ft_manage_int(char *str, int value)
 {
 	int	size;
 	t_Bool	add_sign;
+	t_Bool	need_add;
 
+	need_add = false;
 	add_sign = false;
-	size = ft_calc_number_size(value);
-	ft_apply_rules_before((char *) str.content, size);
-	if (ft_check_addsign((char *) str.content))
+	size = ft_calc_number_size(str, value);
+	ft_apply_rules_before(str, size, &need_add);
+	ft_precision(str, size, &need_add);
+	if (ft_check_addsign(str) && !need_add)
 	{
 		add_sign = true;
-		write(STDOUT_FILENO, "+", 1);
+		write(1, "+", 1);
+		size++;
 	}
-	ft_putnbr((long value));
-	ft_apply_minus_sign((char *) str->content, size);
+	ft_putnbr((long) value, add_sign);
+	ft_apply_minus_sign(str, size);
 }
 
-void	ft_manage_hexa(t_storage str, unsigned value)
+void	ft_manage_hexa(char *str, unsigned value, char u_or_l)
 {
 	int	size;
 
-	size = ft_calc_hexa_size((char *) str.content, value);
-	ft_apply_rules_before(((char *) str.content, size));
-	if (ft_check_dieze((char *) str))
-		write(STDOUT_FILENO, "0x", 2);
+	size = ft_calc_hexa_size(str, value);
+	ft_apply_rules_before(str, size, false);
+	ft_precision(str, size, false);
+	if (ft_check_dieze(str, 0))
+	{
+		ft_putchar('0');
+		ft_putchar('x');
+	}
+	if (u_or_l == 'X')
+		ft_putnbr_hexa_X(value);
+	else
+		ft_putnbr_hexa(value);
+	ft_apply_minus_sign(str, size);
 	//ft_putnbr_hexa_conv
-
 }
 
 //ICI care precision reduction works on string (otherwiser not working)
 //Need to make a special rules for it
 
-void	ft_manage_string(t_storage str, char *value)
+void	ft_manage_string(char *str, char *value)
 {
 	int	size;
 
-	size = ft_strlen_special(value);
-	ft_apply_rules_before((char *) str.content, size);
+	size = ft_strlen_special(value, str);
+	ft_apply_rules_before(str, size, false);
 	ft_putnstr(value, size);
-	ft_apply_minus_sign((char *) str.content, size)
+	ft_apply_minus_sign(str, size);
 }
 
-void	ft_manage_addr(t_storage str, void *addr)
+void	ft_manage_addr(char *str, void *addr)
 {
 	unsigned long	addr_conv;
-	addr_conv = addr;
+	addr_conv = (unsigned long) addr;
 	ft_putchar('0');
 	ft_putchar('x');
 	ft_putnbr_hexa(addr_conv);
 }
 
-void	ft_manage_char(t_storage str, char c)
+void	ft_manage_char(char *str, char c)
 {
-	ft_apply_rules_before((char *) str.content, 1);
+	ft_apply_rules_before(str, 1, false);
 	ft_putchar(c);
-	ft_apply_minus_sign((char *) str.content, 1);
+	ft_apply_minus_sign(str, 1);
 }

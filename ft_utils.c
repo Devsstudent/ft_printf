@@ -35,6 +35,17 @@ void	ft_putnbr_addr(unsigned long nb)
 		ft_putchar(BASE_L[nb]);
 		return ;
 	}
-	ft_putnbr(nb / 16);
+	ft_putnbr(nb / 16, false);
 	ft_putchar(BASE_L[nb % 16]);
+}
+
+t_Bool	ft_check_minus(char *str)
+{
+	while (*str)
+	{
+		if (*str == '-')
+			return (true);
+		str++;
+	}
+	return (false);
 }

@@ -17,7 +17,7 @@ void	ft_putnstr(char *str, int size)
 	int	i;
 
 	i = 0;
-	while (i < size && str[i] != '\0'))
+	while (i < size && str[i] != '\0')
 	{
 		ft_putchar(str[i]);
 		i++;

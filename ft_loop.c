@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
-#include <stdio.h>
 
 void	ft_loop(char *string, va_list ap)
 {
@@ -18,9 +17,9 @@ void	ft_loop(char *string, va_list ap)
 
 	while (*string)
 	{
-		t_storage->content = string;
+		handle.content = string;
 		if (*string == '%')
-			string = ft_brows(handle, ap);
+			string = ft_brows((char *) handle.content, ap);
 		else
 			ft_putchar(*string);
 		string++;
@@ -36,41 +35,57 @@ t_Bool	ft_check_end(char c)
 	return (false);
 }
 
-if (c == 'i')
+char	*ft_brows(char *str, va_list ap)
 {
-	int value = va_arg(ap, int);
-}
-
-char	*ft_brows(t_storage str, va_list ap)
-{
-	char type;
+	char	type;
 	int	i;
+	t_Bool	not_end;
 
 	i = 1;
+	not_end = false;
 /*	if (ft_handle_err(t_storage str))
-		return (str->content);*/
-	if (str->content[i] == '%')
+		return (str);*/
+	if (str[i] == '%')
 	{
 		write(STDOUT_FILENO, "%", 1);
-		return (str->content + i);
+		return (str + i);
 	}
-	while (!ft_check_end(str->content[i]))
+	while (str[i] && !not_end)
 	{
-		if (str->content[i] == 'i' || str->content[i] == 'd')
+//		printf("%c", str[i]);
+		if (str[i] == 'i' || str[i] == 'd')
+		{
 			ft_manage_int(str, va_arg(ap, int));
-		if (str->content[i] == 'x' || str->content[i] == 'X')
-			ft_manage_hexa(str, va_arg(ap, unsigned int));
-		if (str->content[i] == 'u')
-			ft_manage_unsigned(str, va_arg(ap, unsigned int));
-		if (str->content[i] == 's')
-			ft_manage_string(str, va_arg(ap, (char *)));
-		if (str->content[i] == 'c')
-			ft_manage_char(str, va_arg(ap, char));
-		if (str->content[i] == 'p')
-			ft_manage_addr(str, va_arg(ap, (void *)));
+			not_end = true;
+		}
+		else if (str[i] == 'x' || str[i] == 'X')
+		{
+			ft_manage_hexa(str, va_arg(ap, unsigned), str[i]);
+			not_end = true;
+		}
+		else if (str[i] == 'u')
+		{
+			ft_manage_unsigned(str, va_arg(ap, unsigned));
+			not_end = true;
+		}
+		else if (str[i] == 's')
+		{
+			ft_manage_string(str, va_arg(ap, char*));
+			not_end = true;
+		}
+		else if (str[i] == 'c')
+		{
+			ft_manage_char(str, va_arg(ap, int));
+			not_end = true;
+		}
+		else if (str[i] == 'p')
+		{
+			ft_manage_addr(str, va_arg(ap, void*));
+			not_end = true;
+		}
 		i++;
 	}
-	return (str->content + i);
+	return (str + (--i));
 }
 
 	// -1) Special case ( +-# or number)
@@ -81,6 +96,6 @@ char	*ft_brows(t_storage str, va_list ap)
 
 //	ft_fill_struc(str, ap); -> handle type et convert to value depending of %  si y a un point . on lit la valeur suivante 
 	//size de tout pour pouvoir comparer avec les size demander. ou bien des size params genre atoi qui compte les tours etc	 
-//	ft_special_case(str->content); (+- #0)
+//	ft_special_case(str); (+- #0)
 //	display value in struct. depending of the type maybe an enum to store it or something,
 

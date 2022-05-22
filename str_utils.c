@@ -30,7 +30,7 @@ t_Bool	ft_check_dieze(char *str, int index)
 			return (true);
 		index++;
 	}
-	return (false)
+	return (false);
 }
 
 t_Bool	ft_is_digit(char c)
@@ -48,26 +48,27 @@ t_Bool	ft_check_space(char *str, int index)
 			return (true);
 		index++;
 	}
-	return (false)
+	return (false);
 }
 
-size_t	ft_strlen_special(char *s, char *pattern))
+size_t	ft_strlen_special(char *s, char *pattern)
 {
 	size_t	size;
 	int	i;
-	char	*to_free
+	char	*to_free;
 	int	len;
 	int	buff_idx;
 
 	size = 0;
-	i = 0;
-	while (pattern[i] != '\0')
+	i = 1;
+	len = 0;
+	while (!ft_check_end(pattern[i]))
 	{
 		if (pattern[i] == '.' && pattern[i + 1] == 's')
 			return (0);
 		if (pattern[i] == '.' && ft_is_digit(pattern[i + 1]))
 		{
-			buff_idx = i++;
+			buff_idx = ++i;
 			while (ft_is_digit(pattern[i]))
 			{
 				len++;

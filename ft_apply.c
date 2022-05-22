@@ -9,21 +9,30 @@
 /*   Updated: 2022/05/21 14:43:35 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "printf.h"
 
-void	ft_apply_rules_before(char *str, int size)
+void	ft_apply_rules_before(char *str, int size, t_Bool *zero_or_not)
 {
 	int	i;
 
 	i = 1;
-	while (str[i] !='\0')
+	while (!ft_check_end(str[i]))
 	{
 		if (str[i] == ' ' && str[i + 1] != '0' && !ft_is_digit(str[i + 1]))
 			write(STDOUT_FILENO, " ", 1);
 		if (str[i] == '0' && ft_is_digit(str[i + 1]))
+		{
+			if (ft_check_addsign(str))
+			{
+				ft_putchar('+');
+				size++;
+			}
 			i = ft_disp_zero(str, size, i + 1);
+			*zero_or_not = true;
+		}
 		if (str[i] == '.')
 			return ;
-		if (ft_is_digit(str[i]))
+		if (ft_is_digit(str[i]) && !ft_check_minus(str))
 			i = ft_disp_space(str, size, i);
 		i++;
 	}
@@ -33,10 +42,10 @@ void	ft_apply_minus_sign(char *str, int size)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	if (ft_check_space(str, 0))
 		size++;
-	while (str[i] != '\0')
+	while (!(ft_check_end(str[i])))
 	{
 		if (str[i] == '-' && ft_is_digit(str[i + 1]))
 			ft_disp_space(str, size, i + 1);
@@ -44,22 +53,27 @@ void	ft_apply_minus_sign(char *str, int size)
 	}
 }
 
-void	ft_precision(char *str, int size)
+void	ft_precision(char *str, int size, t_Bool *need_add)
 {
 	int		nb_of_zero;
 	int		i;
 	int		len;
 	char	*to_free;
+	int		buff_idx;
 
 	len = 0;
-	i = 0;
-	while (str[max] != '\0')
-		max++;
-	while (str[i] != '\0')
+	i = 1;
+	while (!ft_check_end(str[i]))
 	{
 		if (str[i] == '.' && ft_is_digit(str[i+ 1]))
 		{
 			buff_idx = i + 1;
+			if (ft_check_addsign(str))
+			{
+				ft_putchar('+');
+				size++;
+				*need_add = true;
+			}
 			while (ft_is_digit(str[++i]))
 				len++;
 			to_free = ft_substr(str, buff_idx, len);
@@ -94,7 +108,7 @@ int	ft_disp_zero(char *str, int size, int index)
 		len++;
 		index++;
 	}
-	to_free = ft_substr(str, buff_index, index - 1);
+	to_free = ft_substr(str, buff_index, len);
 	nb_of_zero = ft_atoi(to_free) - size;
 	free(to_free);
 	while (nb_of_zero > 0)
@@ -119,10 +133,10 @@ int	ft_disp_space(char *str, int size, int index)
 		len++;
 		index++;
 	}
-	to_free = ft_substr(str, buff_index, index - 1);
-	nb_of_space = ft_atoi(to_free - size);
+	to_free = ft_substr(str, buff_index, len);
+	nb_of_space = ft_atoi(to_free) - size;
 	free(to_free);
-	while (nb_of_zero > 0)
+	while (nb_of_space > 0)
 	{
 		write(STDOUT_FILENO, " ", 1);
 		nb_of_space--;

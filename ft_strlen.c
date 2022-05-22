@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 14:52:20 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/20 19:25:03 by odessein         ###   ########.fr       */
+/*   Created: 2022/05/02 17:29:11 by odessein          #+#    #+#             */
+/*   Updated: 2022/05/07 12:33:54 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
 
-int	ft_printf(const char *string, ...)
+size_t	ft_strlen(const char *s)
 {
-	va_list	ap;
+	size_t	size;
 
-	va_start(ap,string);
-	ft_loop((char *) string, ap);
-	va_end(ap);
-	return (0);
-}
-
-int	main(void)
-{
-	ft_printf("so lets%5.2ssee what append", "5900");
+	size = 0;
+	while (s[size] != '\0')
+		size++;
+	return (size);
 }
