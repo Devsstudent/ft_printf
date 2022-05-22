@@ -18,22 +18,19 @@ void	ft_apply_rules_before(char *str, int size, t_Bool *zero_or_not)
 	i = 1;
 	while (!ft_check_end(str[i]))
 	{
-		if (str[i] == ' ' && str[i + 1] != '0' && !ft_is_digit(str[i + 1]))
-			write(STDOUT_FILENO, " ", 1);
+		if (str[i] == ' ' && str[i + 1] != '0')
+			ft_putchar(' ');
 		if (str[i] == '0' && ft_is_digit(str[i + 1]))
 		{
-			if (ft_check_addsign(str))
-			{
-				ft_putchar('+');
-				size++;
-			}
+			size = ft_need_sign(str, size, zero_or_not);
 			i = ft_disp_zero(str, size, i + 1);
-			*zero_or_not = true;
 		}
 		if (str[i] == '.')
 			return ;
 		if (ft_is_digit(str[i]) && !ft_check_minus(str))
+		{
 			i = ft_disp_space(str, size, i);
+		}
 		i++;
 	}
 }
@@ -53,7 +50,7 @@ void	ft_apply_minus_sign(char *str, int size)
 	}
 }
 
-void	ft_precision(char *str, int size, t_Bool *need_add)
+void	ft_precision(char *str, int size, t_Bool *add_sign)
 {
 	int		nb_of_zero;
 	int		i;
@@ -68,12 +65,7 @@ void	ft_precision(char *str, int size, t_Bool *need_add)
 		if (str[i] == '.' && ft_is_digit(str[i+ 1]))
 		{
 			buff_idx = i + 1;
-			if (ft_check_addsign(str))
-			{
-				ft_putchar('+');
-				size++;
-				*need_add = true;
-			}
+			size = ft_need_sign(str, size, add_sign);
 			while (ft_is_digit(str[++i]))
 				len++;
 			to_free = ft_substr(str, buff_idx, len);
@@ -81,7 +73,7 @@ void	ft_precision(char *str, int size, t_Bool *need_add)
 			free(to_free);
 			while (nb_of_zero > 0)
 			{
-				write(STDOUT_FILENO, "0", 1);
+				ft_putchar('0');
 				nb_of_zero--;
 			}
 			return ;
@@ -135,10 +127,11 @@ int	ft_disp_space(char *str, int size, int index)
 	}
 	to_free = ft_substr(str, buff_index, len);
 	nb_of_space = ft_atoi(to_free) - size;
+	nb_of_space = ft_check_precision(str, nb_of_space, size);
 	free(to_free);
 	while (nb_of_space > 0)
 	{
-		write(STDOUT_FILENO, " ", 1);
+		ft_putchar(' ');
 		nb_of_space--;
 	}
 	return (index);

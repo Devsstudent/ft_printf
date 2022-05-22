@@ -21,7 +21,9 @@ int	ft_printf(const char *string, ...)
 	return (0);
 }
 
+
+
 int	main(void)
 {
-	ft_printf("so lets%5.2ssee what append", "5900");
+	ft_printf("so lets%+11.10isee what append", 900);
 }

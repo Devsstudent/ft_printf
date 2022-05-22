@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */ /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 14:33:26 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/19 16:35:48 by odessein         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+//header
 #ifndef PRINTF_H 
 # define PRINTF_H
 
@@ -31,7 +21,9 @@ typedef struct s_storage {
 void	ft_loop(char *string, va_list ap);
 char	*ft_brows(char *str, va_list ap);
 t_Bool	ft_check_end(char c);
+int	ft_need_sign(char *str, int size, t_Bool *need_add);
 t_Bool	ft_check_minus(char *str);
+int	ft_check_precision(char *str, int expected_space, int size);
 
 int	ft_atoi(const char *nptr);
 size_t	ft_strlen(const char *s);
@@ -39,7 +31,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 void	ft_apply_rules_before(char *str, int size, t_Bool *zero_or_not);
 void	ft_apply_minus_sign(char *str, int size);
-void	ft_precision(char *str, int size, t_Bool *need_add);
+void	ft_precision(char *str, int size, t_Bool *add_sign);
 int	ft_disp_zero(char *str, int size, int index);
 int	ft_disp_space(char *str, int size, int index);
 

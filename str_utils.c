@@ -51,39 +51,13 @@ t_Bool	ft_check_space(char *str, int index)
 	return (false);
 }
 
-size_t	ft_strlen_special(char *s, char *pattern)
+int	ft_need_sign(char *str, int size, t_Bool *need_add)
 {
-	size_t	size;
-	int	i;
-	char	*to_free;
-	int	len;
-	int	buff_idx;
-
-	size = 0;
-	i = 1;
-	len = 0;
-	while (!ft_check_end(pattern[i]))
+	if (ft_check_addsign(str))
 	{
-		if (pattern[i] == '.' && pattern[i + 1] == 's')
-			return (0);
-		if (pattern[i] == '.' && ft_is_digit(pattern[i + 1]))
-		{
-			buff_idx = ++i;
-			while (ft_is_digit(pattern[i]))
-			{
-				len++;
-				i++;
-			}
-			to_free = ft_substr(pattern, buff_idx, len);
-			size = ft_atoi(to_free);
-			free(to_free);
-			if (size < 0)
-				size = 0;
-			return (size);
-		}
-		i++;
-	}
-	while (s[size] != '\0')
+		ft_putchar('+');
 		size++;
+		*need_add = true;
+	}
 	return (size);
 }

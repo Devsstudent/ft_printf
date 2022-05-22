@@ -21,7 +21,7 @@ void	ft_manage_unsigned(char *str, unsigned value)
 	need_add = false;
 	size = ft_calc_number_size(str, (int) value);
 	ft_apply_rules_before(str, size, &need_add);
-	ft_precision(str, size, &(need_add));
+	ft_precision(str, size, &(add_sign));
 	if (ft_check_addsign(str) && !need_add)
 	{
 		add_sign = true;
