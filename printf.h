@@ -29,7 +29,6 @@ t_Bool	ft_handle_err(char *str, int *ret_val);
 
 int	ft_atoi(const char *nptr);
 size_t	ft_strlen(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 void	ft_apply_rules_before(char *str, int size, t_Bool *sign, int *ret_val);
 void	ft_apply_minus_sign(char *str, int size, int *ret_val);
