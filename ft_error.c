@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:12:55 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 14:56:01 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:43:55 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
@@ -23,17 +23,11 @@ t_Bool	ft_handle_err(char *str, int *ret_val)
 	while(ft_is_digit(*str))
 		str++;
 	if (*str == '-')
-	{
-		str++;
-		while (ft_is_digit(*str))
+		while (ft_is_digit(*(str++)))
 			str++;
-	}
 	if (*str == '.')
-	{
-		str++;
-		while (ft_is_digit(*str))
+		while (ft_is_digit(*(str++)))
 			str++;
-	}
 	if (!ft_check_end(*str))
 	{
 		*ret_val = -1;

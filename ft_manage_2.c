@@ -6,20 +6,21 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 15:01:11 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 12:10:42 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:44:56 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
 
-void	ft_manage_unsigned(char *str, unsigned value, int *ret_val)
+void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not_end)
 {
-	int	size;
+	int		size;
 	t_Bool	add_sign;
 	t_Bool	need_add;
 
+	*not_end = true;
 	add_sign = false;
 	need_add = false;
-	size = ft_calc_number_size(str, (int) value);
+	size = ft_calc_number_size((int) value);
 	ft_apply_rules_before(str, size, &need_add, ret_val);
 	ft_precision(str, size, &(add_sign), ret_val);
 	if (ft_check_addsign(str) && !need_add)
@@ -44,7 +45,6 @@ void	ft_putnbr(long nb, t_Bool add_sign, int *ret_val)
 		if (!add_sign)
 			ft_putchar('-', ret_val);
 	}
-
 	if (nb < 10)
 	{
 		ft_putchar(nb + 48, ret_val);
@@ -56,7 +56,7 @@ void	ft_putnbr(long nb, t_Bool add_sign, int *ret_val)
 		return ;
 }
 
-void	ft_putnbr_hexa(unsigned nb, int *ret_val)
+void	ft_putnbr_hexa(unsigned int nb, int *ret_val)
 {
 	if (nb < 16)
 	{
@@ -69,20 +69,20 @@ void	ft_putnbr_hexa(unsigned nb, int *ret_val)
 		return ;
 }
 
-void	ft_putnbr_hexa_X(unsigned nb, int *ret_val)
+void	ft_putnbr_hexa_x(unsigned int nb, int *ret_val)
 {
 	if (nb < 16)
 	{
 		ft_putchar(BASE_U[nb], ret_val);
 		return ;
 	}
-	ft_putnbr_hexa_X(nb / 16, ret_val);
+	ft_putnbr_hexa_x(nb / 16, ret_val);
 	ft_putchar(BASE_U[nb % 16], ret_val);
 	if (*ret_val == -1)
 		return ;
 }
 
-void	ft_putnbr_unsigned(unsigned nb, int *ret_val)
+void	ft_putnbr_unsigned(unsigned int nb, int *ret_val)
 {
 	if (nb < 10)
 	{

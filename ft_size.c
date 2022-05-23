@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 11:11:48 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 15:43:33 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:07:13 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
@@ -15,13 +15,9 @@ size_t	ft_strlen_special(char *s, char *pattern)
 {
 	size_t	size;
 	int		i;
-	char	*to_free;
-	int		len;
-	int		buff_idx;
 
 	size = 0;
 	i = 0;
-	len = 0;
 	while (!ft_check_end(pattern[++i]))
 	{
 		if (pattern[i] == '.' && pattern[i + 1] == 's')
@@ -37,12 +33,11 @@ size_t	ft_strlen_special(char *s, char *pattern)
 	return (size);
 }
 
-int	ft_calc_number_size(char *str, int value)
+int	ft_calc_number_size(int value)
 {
 	long	val;
 	int		size;
 
-	//ft_check_+; if yes size++; && value not < 0
 	val = value;
 	size = 0;
 	if (val < 0)
@@ -54,13 +49,13 @@ int	ft_calc_number_size(char *str, int value)
 		return (1);
 	while (val > 0)
 	{
-		val = val/10;
+		val = val / 10;
 		size++;
 	}
 	return (size);
 }
 
-int	ft_calc_hexa_size(char *str, unsigned value)
+int	ft_calc_hexa_size(char *str, unsigned int value)
 {
 	long		val;
 	int			size;
@@ -68,7 +63,7 @@ int	ft_calc_hexa_size(char *str, unsigned value)
 	int			i;
 	long		buff;
 
-	index = ft_calc_number_size(str, (int) value) - 1;
+	index = ft_calc_number_size((int) value) - 1;
 	val = value;
 	buff = val;
 	i = 0;
@@ -76,20 +71,16 @@ int	ft_calc_hexa_size(char *str, unsigned value)
 	if (val == 0)
 		size++;
 	while (val != 0 && val % ft_power(16, index) == buff)
-		val =  val % ft_power(16, index--);
+		val = val % ft_power(16, index--);
 	while (val > 0)
 	{
-		val =  val % ft_power(16, index);
+		val = val % ft_power(16, index);
 		size++;
 		index--;
 	}
-	//ft_check_dieze 
 	while (str[i] != '\0')
-	{
-		if (str[i] == '#')
+		if (str[i++] == '#')
 			size = size + 2;
-		i++;
-	}
 	return (size);
 }
 

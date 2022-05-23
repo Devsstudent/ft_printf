@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:12:19 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 15:35:19 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:08:46 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
@@ -30,6 +30,7 @@ void	ft_putnstr(char *str, int size, int *ret_val)
 		}
 	}
 }
+
 static void	ft_skip(const char *nptr, int *i, long long *res, int *neg_sign)
 {
 	*i = 0;
