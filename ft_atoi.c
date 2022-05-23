@@ -6,21 +6,28 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:12:19 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/21 14:37:24 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 15:16:47 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
 #include <stdlib.h>
 
-void	ft_putnstr(char *str, int size)
+void	ft_putnstr(char *str, int size, int *ret_val)
 {
 	int	i;
 
 	i = 0;
-	while (i < size && str[i] != '\0')
+	if (!str && size > 5)
+		ft_putnstr("(null)", 6, ret_val);
+	else
 	{
-		ft_putchar(str[i]);
-		i++;
+		while (i < size && str[i] != '\0')
+		{
+			ft_putchar(str[i], ret_val);
+			if (*ret_val == -1)
+				return ;
+			i++;
+		}
 	}
 }
 static void	ft_skip(const char *nptr, int *i, long long *res, int *neg_sign)

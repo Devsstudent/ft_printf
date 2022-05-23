@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 11:58:50 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/21 14:39:28 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:52:43 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
@@ -51,11 +51,11 @@ t_Bool	ft_check_space(char *str, int index)
 	return (false);
 }
 
-int	ft_need_sign(char *str, int size, t_Bool *need_add)
+int	ft_need_sign(char *str, int size, t_Bool *need_add, int *ret_val)
 {
 	if (ft_check_addsign(str))
 	{
-		ft_putchar('+');
+		ft_putchar('+', ret_val);
 		size++;
 		*need_add = true;
 	}

@@ -1,34 +1,47 @@
-//header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/23 12:12:55 by odessein          #+#    #+#             */
+/*   Updated: 2022/05/23 14:56:01 by odessein         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "printf.h"
 
-t_Bool	ft_handle_err(char *str)
+t_Bool	ft_handle_err(char *str, int *ret_val)
 {
-	char	type;
-	int	i;
-	t_Bool	error;
-
-	i = 1;
-	error = false;
-	while (str[i])
+	str++;
+	if (*str == ' ')
+		str++;
+	if (*str == '+')
+		str++;
+	if (*str == 0)
+		str++;
+	while(ft_is_digit(*str))
+		str++;
+	if (*str == '-')
 	{
-		if (ft_check_end(str[i]))
-			type = str[i];
-		i++;
+		str++;
+		while (ft_is_digit(*str))
+			str++;
 	}
-	if (type == 'd' || type == 'i' || type == 'u')
-		ft_check_comb_nb(str, &error);
-	else if (type == 'x' || type == 'X')
-		ft_check_comb_hex(str, &error);
-	else if (type == 'p')
-		ft_check_comb_addr(str, &error);
-	else if (type == 's')
-		ft_check_comb_string(str, &error);
-	else if (type == 'c')
-		ft_check_comb_char(str, &error);
-	if(error)
+	if (*str == '.')
+	{
+		str++;
+		while (ft_is_digit(*str))
+			str++;
+	}
+	if (!ft_check_end(*str))
+	{
+		*ret_val = -1;
 		return (true);
-	return  (false);
+	}
+	return (false);
 }
-
+/*
 void	ft_check_comb_nb(char *str, t_Bool *error)
 {
 	
@@ -36,7 +49,6 @@ void	ft_check_comb_nb(char *str, t_Bool *error)
 
 void	ft_check_comb_hex(char *str, t_Bool *error)
 {
-
 
 }
 
@@ -49,3 +61,4 @@ void	ft_check_comb_addr(char *str, t_Bool *error)
 {
 
 }
+*/

@@ -6,12 +6,12 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 12:47:13 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/21 14:43:35 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:08:53 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
 
-void	ft_apply_rules_before(char *str, int size, t_Bool *zero_or_not)
+void	ft_apply_rules_before(char *str, int size, t_Bool *sign, int *ret_val)
 {
 	int	i;
 
@@ -19,23 +19,25 @@ void	ft_apply_rules_before(char *str, int size, t_Bool *zero_or_not)
 	while (!ft_check_end(str[i]))
 	{
 		if (str[i] == ' ' && str[i + 1] != '0')
-			ft_putchar(' ');
+		{
+			ft_putchar(' ', ret_val);
+			if (*ret_val == -1)
+				return ;
+		}
 		if (str[i] == '0' && ft_is_digit(str[i + 1]))
 		{
-			size = ft_need_sign(str, size, zero_or_not);
-			i = ft_disp_zero(str, size, i + 1);
+			size = ft_need_sign(str, size, sign, ret_val);
+			i = ft_disp_zero(str, size, i + 1, ret_val);
 		}
 		if (str[i] == '.')
 			return ;
 		if (ft_is_digit(str[i]) && !ft_check_minus(str))
-		{
-			i = ft_disp_space(str, size, i);
-		}
+			i = ft_disp_space(str, size, i, ret_val);
 		i++;
 	}
 }
 
-void	ft_apply_minus_sign(char *str, int size)
+void	ft_apply_minus_sign(char *str, int size, int *ret_val)
 {
 	int	i;
 
@@ -45,12 +47,16 @@ void	ft_apply_minus_sign(char *str, int size)
 	while (!(ft_check_end(str[i])))
 	{
 		if (str[i] == '-' && ft_is_digit(str[i + 1]))
-			ft_disp_space(str, size, i + 1);
+		{
+			ft_disp_space(str, size, i + 1, ret_val);
+			if (*ret_val == -1)
+				return ;
+		}
 		i++;
 	}
 }
 
-void	ft_precision(char *str, int size, t_Bool *add_sign)
+void	ft_precision(char *str, int size, t_Bool *add_sign, int *ret_val)
 {
 	int		nb_of_zero;
 	int		i;
@@ -65,7 +71,7 @@ void	ft_precision(char *str, int size, t_Bool *add_sign)
 		if (str[i] == '.' && ft_is_digit(str[i+ 1]))
 		{
 			buff_idx = i + 1;
-			size = ft_need_sign(str, size, add_sign);
+			size = ft_need_sign(str, size, add_sign, ret_val);
 			while (ft_is_digit(str[++i]))
 				len++;
 			to_free = ft_substr(str, buff_idx, len);
@@ -73,7 +79,9 @@ void	ft_precision(char *str, int size, t_Bool *add_sign)
 			free(to_free);
 			while (nb_of_zero > 0)
 			{
-				ft_putchar('0');
+				ft_putchar('0', ret_val);
+				if (*ret_val == -1)
+					return ;
 				nb_of_zero--;
 			}
 			return ;
@@ -82,7 +90,7 @@ void	ft_precision(char *str, int size, t_Bool *add_sign)
 	}
 }
 
-int	ft_disp_zero(char *str, int size, int index)
+int	ft_disp_zero(char *str, int size, int index, int *ret_val)
 {
 	//atoi un sub str pour avoir la value de buf_index
 	int		nb_of_zero;
@@ -105,13 +113,15 @@ int	ft_disp_zero(char *str, int size, int index)
 	free(to_free);
 	while (nb_of_zero > 0)
 	{
-		write(STDOUT_FILENO, "0", 1);
+		ft_putchar('0', ret_val);
+		if (*ret_val == -1)
+			return (ft_strlen(str) - 1);
 		nb_of_zero--;
 	}
 	return (index);
 }
 
-int	ft_disp_space(char *str, int size, int index)
+int	ft_disp_space(char *str, int size, int index, int *ret_val)
 {
 	int		nb_of_space;
 	int		buff_index;
@@ -131,7 +141,9 @@ int	ft_disp_space(char *str, int size, int index)
 	free(to_free);
 	while (nb_of_space > 0)
 	{
-		ft_putchar(' ');
+		ft_putchar(' ', ret_val);
+		if (*ret_val == -1)
+			return (ft_strlen(str) - 1);
 		nb_of_space--;
 	}
 	return (index);

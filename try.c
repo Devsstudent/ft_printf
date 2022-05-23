@@ -1,6 +1,7 @@
+#include <stdlib.h>
 int	main(void)
 {
-	//void *test= "tt";
-//	printf("%lu", (unsigned long) test);
-	printf("t%+.10it", 345678);
+	void *test= NULL;
+
+	printf("\n %i", printf("%.1p", test));
 }
