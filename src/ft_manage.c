@@ -58,7 +58,9 @@ void	ft_manage_hexa(char *str, unsigned int val, int *ret_val, t_Bool *not_end)
 	if (u_or_l == 'X')
 		ft_putnbr_hexa_x(val, ret_val);
 	else
+	{
 		ft_putnbr_hexa(val, ret_val);
+	}
 	ft_apply_minus_sign(str, size, ret_val);
 }
 
