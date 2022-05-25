@@ -9,17 +9,17 @@
 /*   Updated: 2022/05/23 11:52:43 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 //IDEA : Maybe just make 1 function take the char to find in params !
 t_Bool	ft_check_addsign(char *str)
 {
 	while (*(str))
 	{
 		if (*str == '+')
-			return (true);
+			return (TRUE);
 		str++;
 	}
-	return (false);
+	return (FALSE);
 }
 
 t_Bool	ft_check_dieze(char *str, int index)
@@ -27,17 +27,17 @@ t_Bool	ft_check_dieze(char *str, int index)
 	while (str[index])
 	{
 		if (str[index] == '#')
-			return (true);
+			return (TRUE);
 		index++;
 	}
-	return (false);
+	return (FALSE);
 }
 
 t_Bool	ft_is_digit(char c)
 {
 	if (c < 58 && c > 47)
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
 t_Bool	ft_check_space(char *str, int index)
@@ -45,19 +45,21 @@ t_Bool	ft_check_space(char *str, int index)
 	while (str[index])
 	{
 		if (str[index] == '#')
-			return (true);
+			return (TRUE);
 		index++;
 	}
-	return (false);
+	return (FALSE);
 }
 
-int	ft_need_sign(char *str, int size, t_Bool *need_add, int *ret_val)
+int	ft_need_sign(char *str, int size, t_useful *need_add, int *ret_val)
 {
-	if (ft_check_addsign(str))
+	if (ft_check_addsign(str) && !((*need_add).need_neg))
 	{
 		ft_putchar('+', ret_val);
 		size++;
-		*need_add = true;
+		(*need_add).need_add = TRUE;
 	}
+	if ((*need_add).need_neg)
+		ft_putchar('-', ret_val);
 	return (size);
 }

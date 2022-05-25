@@ -9,11 +9,11 @@
 /*   Updated: 2022/05/23 19:00:08 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_printf(const char *string, ...)
 {
-	va_list	ap;
+	va_list		ap;
 	int		ret_val;
 
 	ret_val = 0;
@@ -21,4 +21,15 @@ int	ft_printf(const char *string, ...)
 	ft_loop((char *) string, ap, &ret_val);
 	va_end(ap);
 	return (ret_val);
+} 
+
+t_Bool	ft_check_prec_zero(char *str)
+{
+	while (*str)
+	{
+		if (*str == '0' && !ft_is_digit(*(str - 1)) && *(str - 1) != '.')
+			return (FALSE);
+		str++;
+	}
+	return (TRUE);
 }

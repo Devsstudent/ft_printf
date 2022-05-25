@@ -9,7 +9,7 @@
 /*   Updated: 2022/05/23 19:43:55 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 t_Bool	ft_handle_err(char *str, int *ret_val)
 {
@@ -31,9 +31,9 @@ t_Bool	ft_handle_err(char *str, int *ret_val)
 	if (!ft_check_end(*str))
 	{
 		*ret_val = -1;
-		return (true);
+		return (TRUE);
 	}
-	return (false);
+	return (FALSE);
 }
 /*
 void	ft_check_comb_nb(char *str, t_Bool *error)

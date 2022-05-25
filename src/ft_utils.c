@@ -9,9 +9,9 @@
 /*   Updated: 2022/05/23 15:14:15 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
-int	ft_power(long number, int power)
+long	ft_power(long number, int power)
 {
 	if (power < 0)
 		return (0);
@@ -38,7 +38,7 @@ void	ft_putnbr_addr(unsigned long nb, int *ret_val)
 		ft_putchar(BASE_L[nb], ret_val);
 		return ;
 	}
-	ft_putnbr(nb / 16, false, ret_val);
+	ft_putnbr_addr(nb / 16, ret_val);
 	ft_putchar(BASE_L[nb % 16], ret_val);
 	if (*ret_val == -1)
 		return ;
@@ -49,8 +49,19 @@ t_Bool	ft_check_minus(char *str)
 	while (*str)
 	{
 		if (*str == '-')
-			return (true);
+			return (TRUE);
 		str++;
 	}
-	return (false);
+	return (FALSE);
+}
+
+t_Bool	ft_check_neg_sign(char *str)
+{
+	while (*str)
+	{
+		if (*str == '0' || *str == '.')
+			return (FALSE);
+		str++;
+	}
+	return (TRUE);
 }

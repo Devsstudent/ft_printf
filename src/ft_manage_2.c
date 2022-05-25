@@ -1,6 +1,5 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*                                                                            */ /*                                                        :::      ::::::::   */
 /*   ft_manage_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
@@ -9,48 +8,45 @@
 /*   Updated: 2022/05/23 19:44:56 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not_end)
 {
 	int		size;
-	t_Bool	add_sign;
-	t_Bool	need_add;
+	t_useful	need_add;
 
-	*not_end = true;
-	add_sign = false;
-	need_add = false;
-	size = ft_calc_number_size((int) value);
+	*not_end = TRUE;
+	need_add.need_add = FALSE;
+	need_add.need_neg = FALSE;
+	size = ft_calc_number_size((unsigned long) value, str);
 	ft_apply_rules_before(str, size, &need_add, ret_val);
-	ft_precision(str, size, &(add_sign), ret_val);
-	if (ft_check_addsign(str) && !need_add)
+	ft_precision(str, size, &need_add, ret_val);
+	if (ft_check_addsign(str) && !need_add.need_add)
 	{
-		add_sign = true;
 		ft_putchar('+', ret_val);
 		if (*ret_val == -1)
 			return ;
 		size++;
 	}
-	ft_putnbr_unsigned(value, ret_val);
-	if (*ret_val == -1)
-		return ;
+	if (!ft_check_novalue(str, value))
+	{
+		ft_putnbr_unsigned(value, ret_val);
+		if (*ret_val == -1)
+			return ;
+	}
 	ft_apply_minus_sign(str, size, ret_val);
 }
 
-void	ft_putnbr(long nb, t_Bool add_sign, int *ret_val)
+void	ft_putnbr(long nb, int *ret_val)
 {
 	if (nb < 0)
-	{
 		nb = nb * (-1);
-		if (!add_sign)
-			ft_putchar('-', ret_val);
-	}
 	if (nb < 10)
 	{
 		ft_putchar(nb + 48, ret_val);
 		return ;
 	}
-	ft_putnbr(nb / 10, add_sign, ret_val);
+	ft_putnbr(nb / 10, ret_val);
 	ft_putchar((nb % 10) + 48, ret_val);
 	if (*ret_val == -1)
 		return ;
@@ -89,7 +85,7 @@ void	ft_putnbr_unsigned(unsigned int nb, int *ret_val)
 		ft_putchar(nb + 48, ret_val);
 		return ;
 	}
-	ft_putnbr(nb / 10, false, ret_val);
+	ft_putnbr(nb / 10, ret_val);
 	ft_putchar((nb % 10) + 48, ret_val);
 	if (*ret_val == -1)
 		return ;

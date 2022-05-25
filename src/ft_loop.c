@@ -9,7 +9,7 @@
 /*   Updated: 2022/05/23 19:41:43 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 void	ft_loop(char *string, va_list ap, int *ret_val)
 {
@@ -33,10 +33,10 @@ void	ft_loop(char *string, va_list ap, int *ret_val)
 t_Bool	ft_check_end(char c)
 {
 	if (c == 'i' || c == 'd' || c == 'u' || c == 'p' || c == 's')
-		return (true);
+		return (TRUE);
 	else if (c == 'c' || c == 'x' || c == 'X' || c == '%')
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }
 
 char	*ft_brows(char *str, va_list ap, int *ret_val)
@@ -46,7 +46,7 @@ char	*ft_brows(char *str, va_list ap, int *ret_val)
 	t_Bool	not_end;
 
 	i = 0;
-	not_end = false;
+	not_end = FALSE;
 	store = ft_brows_1(str, ret_val);
 	if (store != 0)
 		return (store);
@@ -78,4 +78,15 @@ char	*ft_brows_1(char *str, int *ret_val)
 		return (str + 1);
 	}
 	return (0);
+}
+
+t_Bool	ft_check_novalue(char *str, int value)
+{
+	while (*str)
+	{
+		if (*str == '.' && (!ft_is_digit(*(str + 1)) || *(str + 1) == '0') && value == 0)
+			return (TRUE);
+		str++;
+	}
+	return (FALSE);
 }
