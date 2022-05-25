@@ -1,8 +1,0 @@
-#include "includes/ft_printf.h"
-
-int	main(void)
-{
-	printf("%i", ft_printf(" %05x ", 17));
-	printf("\n");
-	printf("%i", printf(" %05x ", 17));
-}

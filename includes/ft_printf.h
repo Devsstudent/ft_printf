@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf.h                                           :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:42:48 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 19:41:26 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:57:28 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_check_precision(char *str, int expected_space, int size);
 t_Bool	ft_is_ok(char c);
 t_Bool	ft_handle_err(char *str, int *ret_val);
 t_Bool	ft_check_neg_sign(char *str);
-t_Bool	ft_check_novalue(char *str, int value);
+t_Bool	ft_check_novalue(char *str, unsigned int value);
 t_Bool	ft_check_prec_zero(char *str);
 
 int		ft_atoi(const char *nptr);
@@ -64,7 +64,7 @@ size_t	ft_strlen_special(char *s, char *pattern);
 void	ft_manage_int(char *str, int value, int *ret_val, t_Bool *not_end);
 void	ft_manage_hexa(char *str, unsigned int val, int *ret_val, t_Bool *not_end);
 void	ft_manage_string(char *str, char *value, int *ret_val, t_Bool *not_end);
-void	ft_manage_addr(void *addr, int *ret_val, t_Bool *not_end);
+void	ft_manage_addr(char *str, void *addr, int *ret_val, t_Bool *not_end);
 void	ft_manage_char(char *str, char c, int *ret_val, t_Bool *not_end);
 void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not_end);
 

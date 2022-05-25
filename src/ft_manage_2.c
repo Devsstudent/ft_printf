@@ -9,6 +9,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
+#include <stdio.h>
 
 void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not_end)
 {

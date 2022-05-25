@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 12:47:13 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 15:44:56 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:54:54 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -25,7 +25,9 @@ void	ft_apply_rules_before(char *str, int size, t_useful *sign, int *ret_val)
 			if (*ret_val == -1)
 				return ;
 		}
-		if (str[i] == '0')
+		if (ft_is_digit(str[i]) && !ft_check_minus(str) && str[i] != '0')
+			i = ft_disp_space(str, size, i, ret_val);
+		if (str[i] == '0' && !ft_check_end(str[i + 1]))
 		{
 			size = ft_need_sign(str, size, sign, ret_val);
 			if (ft_is_digit(str[i + 1]))
@@ -33,8 +35,6 @@ void	ft_apply_rules_before(char *str, int size, t_useful *sign, int *ret_val)
 		}
 		if (str[i] == '.' || ft_check_end(str[i]))
 			return ;
-		if (ft_is_digit(str[i]) && !ft_check_minus(str))
-			i = ft_disp_space(str, size, i, ret_val);
 		i++;
 	}
 }
@@ -125,5 +125,7 @@ int	ft_disp_space(char *str, int size, int index, int *ret_val)
 			return (ft_strlen(str) - 1);
 		nb_of_space--;
 	}
+	while (ft_is_digit(str[index]))
+		index++;
 	return (index);
 }
