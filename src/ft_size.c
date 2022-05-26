@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 11:11:48 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 19:07:13 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:59:47 by odessein         ###   ########.fr       */
 /*                                                                            */ /* ************************************************************************** */ 
 #include "ft_printf.h"
 #include <stdio.h>
@@ -19,6 +19,10 @@ size_t	ft_strlen_special(char *s, char *pattern)
 	i = 0;
 	while (!ft_check_end(pattern[++i]))
 	{
+		if (ft_is_digit(pattern[i]) && pattern[i - 1] != '-' && !s)
+		{
+			return (6);
+		}
 		if (pattern[i] == '.' && pattern[i + 1] == 's')
 			return (0);
 		if (pattern[i] == '.' && ft_is_digit(pattern[i + 1]))
@@ -27,9 +31,7 @@ size_t	ft_strlen_special(char *s, char *pattern)
 			return (size);
 		} 
 	}
-	if (!s)
-		return (6);
-	while (s[size] != '\0')
+	while (s && s[size] != '\0')
 		size++;
 	return (size);
 }
@@ -44,6 +46,7 @@ int	ft_calc_number_size(unsigned long value, char *str)
 	if (val < 0)
 	{
 		val = val * (-1);
+		//if (!ft_check_precision_or_not(str))
 		size++;
 	}
 	if (val == 0 && !ft_check_novalue(str, (int) value))
@@ -56,30 +59,29 @@ int	ft_calc_number_size(unsigned long value, char *str)
 	return (size);
 }
 
-int	ft_calc_hexa_size(char *str, unsigned int value)
+int	ft_calc_hexa_size(char *str, unsigned long value)
 {
 	long		val;
 	int			size;
 	long		index;
 	int			i;
-	long		buff;
 
+	if (ft_check_novalue(str, value))
+		return (0);
 	index = ft_calc_number_size((unsigned long) value, str);
 	val = value;
-	buff = val;
 	i = 0;
 	size = 0;
 	if (val == 0)
-		size++;
-	while (val != 0 && val % ft_power(16, index) == buff)
-		val = val % ft_power(16, index--);
-
-	while (val > 0)
 	{
-		buff = val;
+		size++;
+		return (size);
+	}
+	while (val % ft_power(16, index) == val)
+		index--;
+	while (index >= 0)
+	{
 		val = val % ft_power(16, index);
-		if (val ==  0 && buff - ft_power(16, index) > 0 && index > 0)
-			val = buff - ft_power(16, index);
 		size++;
 		index--;
 	}
@@ -93,20 +95,24 @@ int	ft_check_precision(char *str, int expected_space, int size)
 {
 	int	i;
 	int	nb_of_zero;
+	int	res;
 
 	i = 1;
+	res = expected_space;
 	while (!ft_check_end(str[i]))
 	{
 		if (str[i] == '.' && ft_is_digit(str[i + 1]))
 		{
 			nb_of_zero = ft_atoi(&str[i + 1]) - size;
 			if (nb_of_zero < 0)
-				nb_of_zero *= -1;
-			return (expected_space - nb_of_zero);
+				nb_of_zero = 0;
+			res = expected_space - nb_of_zero;
 		}
 		i++;
 	}
-	return (expected_space);
+	if (str[i] == 's')
+		return (expected_space);
+	return (res);
 }
 
 size_t	ft_strlen(const char *s)

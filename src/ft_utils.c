@@ -46,7 +46,7 @@ void	ft_putnbr_addr(unsigned long nb, int *ret_val)
 
 t_Bool	ft_check_minus(char *str)
 {
-	while (*str)
+	while (*str && !ft_check_end(*str))
 	{
 		if (*str == '-')
 			return (TRUE);
@@ -57,9 +57,11 @@ t_Bool	ft_check_minus(char *str)
 
 t_Bool	ft_check_neg_sign(char *str)
 {
-	while (*str)
+	while (*str && !ft_check_end(*str))
 	{
-		if (*str == '0' || *str == '.')
+		if (*str == '0' && !ft_is_digit(*(str - 1)))
+			return (FALSE);
+		if(*str == '.')
 			return (FALSE);
 		str++;
 	}

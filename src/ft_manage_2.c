@@ -9,6 +9,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
+#include <stdio.h>
 
 void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not_end)
 {
@@ -16,8 +17,7 @@ void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not
 	t_useful	need_add;
 
 	*not_end = TRUE;
-	need_add.need_add = FALSE;
-	need_add.need_neg = FALSE;
+	ft_init_struc(&need_add);
 	size = ft_calc_number_size((unsigned long) value, str);
 	ft_apply_rules_before(str, size, &need_add, ret_val);
 	ft_precision(str, size, &need_add, ret_val);
@@ -34,7 +34,7 @@ void	ft_manage_unsigned(char *str, unsigned int value, int *ret_val, t_Bool *not
 		if (*ret_val == -1)
 			return ;
 	}
-	ft_apply_minus_sign(str, size, ret_val);
+	ft_apply_minus_sign(str, size, ret_val, &need_add);
 }
 
 void	ft_putnbr(long nb, int *ret_val)

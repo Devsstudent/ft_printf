@@ -22,14 +22,3 @@ int	ft_printf(const char *string, ...)
 	va_end(ap);
 	return (ret_val);
 } 
-
-t_Bool	ft_check_prec_zero(char *str)
-{
-	while (*str)
-	{
-		if (*str == '0' && !ft_is_digit(*(str - 1)) && *(str - 1) != '.')
-			return (FALSE);
-		str++;
-	}
-	return (TRUE);
-}

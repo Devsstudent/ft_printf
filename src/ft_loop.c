@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 14:51:26 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 19:41:43 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:56:52 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -63,7 +63,7 @@ char	*ft_brows(char *str, va_list ap, int *ret_val)
 		else if (str[i] == 'c')
 			ft_manage_char(str, va_arg(ap, int), ret_val, &not_end);
 		else if (str[i] == 'p')
-			ft_manage_addr(va_arg(ap, void *), ret_val, &not_end);
+			ft_manage_addr(str, va_arg(ap, void *), ret_val, &not_end);
 	} 
 	return (str + (--i)); 
 }
@@ -80,7 +80,7 @@ char	*ft_brows_1(char *str, int *ret_val)
 	return (0);
 }
 
-t_Bool	ft_check_novalue(char *str, int value)
+t_Bool	ft_check_novalue(char *str, unsigned int value)
 {
 	while (*str)
 	{

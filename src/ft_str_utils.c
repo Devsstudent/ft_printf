@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_utils.c                                        :+:      :+:    :+:   */
+/*   ft_str_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 11:58:50 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 11:52:43 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:58:05 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -60,6 +60,10 @@ int	ft_need_sign(char *str, int size, t_useful *need_add, int *ret_val)
 		(*need_add).need_add = TRUE;
 	}
 	if ((*need_add).need_neg)
+	{
+		(*need_add).need_neg = FALSE;
+		(*need_add).prec = TRUE;
 		ft_putchar('-', ret_val);
+	}
 	return (size);
 }
