@@ -5,11 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 14:51:26 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/25 15:56:52 by odessein         ###   ########.fr       */
+/*   Created: 2022/05/26 14:47:47 by odessein          #+#    #+#             */
+/*   Updated: 2022/05/26 17:37:50 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "ft_printf.h"
+
+static inline char	*ft_brows_1(char *str, int *ret_val)
+{
+	if (str[1] == '%')
+	{
+		ft_putchar('%', ret_val);
+		if (*ret_val == -1)
+			return (str + ft_strlen(str) - 1);
+		return (str + 1);
+	}
+	return (0);
+}
 
 void	ft_loop(char *string, va_list ap, int *ret_val)
 {
@@ -64,27 +77,16 @@ char	*ft_brows(char *str, va_list ap, int *ret_val)
 			ft_manage_char(str, va_arg(ap, int), ret_val, &not_end);
 		else if (str[i] == 'p')
 			ft_manage_addr(str, va_arg(ap, void *), ret_val, &not_end);
-	} 
-	return (str + (--i)); 
-}
-
-char	*ft_brows_1(char *str, int *ret_val)
-{
-	if (str[1] == '%')
-	{
-		ft_putchar('%', ret_val);
-		if (*ret_val == -1)
-			return (str + ft_strlen(str) - 1);
-		return (str + 1);
 	}
-	return (0);
+	return (str + (--i));
 }
 
-t_Bool	ft_check_novalue(char *str, unsigned int value)
+t_Bool	ft_check_novalue(char *str, unsigned int val)
 {
 	while (*str)
 	{
-		if (*str == '.' && (!ft_is_digit(*(str + 1)) || *(str + 1) == '0') && value == 0)
+		if (*str == '.' && (!ft_is_digit(*(str + 1)) || *(str + 1) == '0')
+			&& val == 0)
 			return (TRUE);
 		str++;
 	}

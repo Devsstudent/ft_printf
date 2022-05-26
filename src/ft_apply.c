@@ -6,46 +6,38 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 12:47:13 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/25 15:54:54 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:19:19 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 #include <stdio.h>
 
-void	ft_apply_rules_before(char *str, int size, t_useful *sign, int *ret_val)
+void	ft_apply_rules_before(char *str, int size, t_useful *sign, int *r_v)
 {
 	int	i;
 
-	i = 1;
-	while (!ft_check_end(str[i]))
+	i = 0;
+	while (!ft_check_end(str[++i]))
 	{
-		if (str[i] == ' ' && str[i + 1] != '0' && !(*sign).need_neg)
-		{
-			while (str[i + 1] == ' ')
-				i++;
-			ft_putchar(' ', ret_val);
-			if (*ret_val == -1)
-				return ;
-		}
-		if (ft_is_digit(str[i]) && !ft_check_minus(str) && str[i] != '0' && str[i - 1] != '-' && !ft_is_digit(str[i - 1]))
-			i = ft_disp_space(str, size, i, ret_val);
+		if (ft_space_at_start(str, &i, sign, r_v))
+			return ;
+		i = ft_space(str, &i, r_v, size);
 		if (str[i] == '0' && !ft_check_end(str[i + 1]))
 		{
 			if (ft_check_precision_or_not(str) && ft_is_digit(str[i + 1]))
 			{
 				if ((*sign).prec || (sign->need_neg))
-					ft_disp_space_neg(str, size, ft_atoi(&str[i + 1]), ret_val);
+					ft_disp_space_neg(str, size, ft_atoi(&str[i + 1]), r_v);
 				else
-					i = ft_disp_space(str, size, i + 1, ret_val) + 1;
+					i = ft_disp_space(str, size, i + 1, r_v) + 1;
 				break ;
 			}
-			size = ft_need_sign(str, size, sign, ret_val);
+			size = ft_need_sign(str, size, sign, r_v);
 			if (ft_is_digit(str[i + 1]))
-				i = ft_disp_zero(str, size, i + 1, ret_val);
+				i = ft_disp_zero(str, size, i + 1, r_v);
 		}
 		if (str[i] == '.' || ft_check_end(str[i]))
 			return ;
-		i++;
 	}
 }
 
@@ -76,37 +68,34 @@ void	ft_precision(char *str, int size, t_useful *add_sign, int *ret_val)
 	int		nb_of_zero;
 	int		i;
 
-	i = 1;
-	while (!ft_check_end(str[i]))
+	i = 0;
+	while (!ft_check_end(str[++i]))
 	{
 		if (str[i] == '.')
 		{
-			if ((size = ft_need_sign(str, size, add_sign, ret_val)) && (*add_sign).prec)
+			size = ft_need_sign(str, size, add_sign, ret_val);
+			if ((*add_sign).prec)
 				size--;
-			if (ft_is_digit(str[i+ 1]))
+			if (ft_is_digit(str[i + 1]))
 			{
 				nb_of_zero = ft_atoi(&str[i + 1]) - size;
-				while (nb_of_zero > 0)
+				while (nb_of_zero-- > 0)
 				{
 					ft_putchar('0', ret_val);
 					if (*ret_val == -1)
 						return ;
-					nb_of_zero--;
 				}
 				return ;
 			}
 		}
-		i++;
 	}
 }
 
 int	ft_disp_zero(char *str, int size, int index, int *ret_val)
 {
-	//atoi un sub str pour avoir la value de buf_index
 	int		nb_of_zero;
 	int		index_cursor;
 
-	// function qui check if a space before index if it is print 1 less 0
 	index_cursor = index;
 	while (ft_is_digit(str[index_cursor]))
 		index_cursor++;

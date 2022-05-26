@@ -5,11 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/21 11:11:48 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/25 14:59:47 by odessein         ###   ########.fr       */
-/*                                                                            */ /* ************************************************************************** */ 
+/*   Created: 2022/05/26 14:28:22 by odessein          #+#    #+#             */
+/*   Updated: 2022/05/26 14:29:46 by odessein         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "ft_printf.h"
-#include <stdio.h>
+
 size_t	ft_strlen_special(char *s, char *pattern)
 {
 	size_t	size;
@@ -29,7 +30,7 @@ size_t	ft_strlen_special(char *s, char *pattern)
 		{
 			size = ft_atoi(&pattern[i + 1]);
 			return (size);
-		} 
+		}
 	}
 	while (s && s[size] != '\0')
 		size++;
@@ -46,7 +47,6 @@ int	ft_calc_number_size(unsigned long value, char *str)
 	if (val < 0)
 	{
 		val = val * (-1);
-		//if (!ft_check_precision_or_not(str))
 		size++;
 	}
 	if (val == 0 && !ft_check_novalue(str, (int) value))
@@ -73,10 +73,7 @@ int	ft_calc_hexa_size(char *str, unsigned long value)
 	i = 0;
 	size = 0;
 	if (val == 0)
-	{
-		size++;
-		return (size);
-	}
+		return (size + 1);
 	while (val % ft_power(16, index) == val)
 		index--;
 	while (index >= 0)

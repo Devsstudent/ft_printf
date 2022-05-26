@@ -1,5 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_add.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/26 14:34:28 by odessein          #+#    #+#             */
+/*   Updated: 2022/05/26 17:29:44 by odessein         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include <ft_printf.h>
-#include <stdio.h>
+
+/*
+int	ft_get_precision(char *str, t_useful *sign)
+{
+	int	prec;
+
+	prec = 0;
+	while ((*str && !ft_check_end(*str)) || *str == '%')
+	{
+		if (*str == '.' && ft_is_digit(*(str + 1)))
+			prec = ft_atoi(str + 1);
+		str++;
+	}
+	if ((*sign).need_neg)
+		prec++;
+	return (prec);
+}
+*/
 t_Bool	ft_check_precision_or_not(char *str)
 {
 	while ((*str && !ft_check_end(*str)) || *str == '%')
@@ -43,48 +71,11 @@ void	ft_init_struc(t_useful *init)
 	(*init).need_neg = FALSE;
 }
 
-int	ft_get_precision(char *str, t_useful *sign)
+int	ft_manage_hexa_v1(int i, t_useful *sign, t_Bool *not_end, char *str)
 {
-	int	prec;
-
-	prec = 0;
-	while ((*str && !ft_check_end(*str)) || *str == '%')
-	{
-		if (*str == '.' && ft_is_digit(*(str + 1)))
-			prec = ft_atoi(str + 1);
-		str++;
-	}
-	if ((*sign).need_neg)
-		prec++;
-	return (prec);
-}
-
-int	ft_disp_space_spe(char *str, int size, t_useful *sign, int *ret_val)
-{
-	int		nb_of_space;
-	int		i;
-
-	i = 1;
-	while (!ft_check_end(*(++str)))
-	{
-		if (ft_is_digit(*str) && !ft_check_minus(str) && *str != '0' && *(str - 1) != '-')
-		{
-			nb_of_space = ft_atoi(str) - size;
-			if (ft_check_precision_or_not(str))
-			{
-				nb_of_space = ft_atoi(str) - ft_get_precision(str, sign);
-				while (nb_of_space > 0)
-				{
-					ft_putchar(' ', ret_val);
-					if (*ret_val == -1)
-						return (ft_strlen(str) - 1);
-					nb_of_space--;
-				}
-				while (ft_is_digit(str[i]))
-				i++;
-			}
-		}
+	*not_end = TRUE;
+	ft_init_struc(sign);
+	while (str[i] != 'x' && str[i] != 'X' && str[i] != '\0')
 		i++;
-	}
 	return (i);
 }

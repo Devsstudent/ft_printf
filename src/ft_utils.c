@@ -6,7 +6,7 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 11:58:50 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/23 15:14:15 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:50:03 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -61,7 +61,7 @@ t_Bool	ft_check_neg_sign(char *str)
 	{
 		if (*str == '0' && !ft_is_digit(*(str - 1)))
 			return (FALSE);
-		if(*str == '.')
+		if (*str == '.')
 			return (FALSE);
 		str++;
 	}

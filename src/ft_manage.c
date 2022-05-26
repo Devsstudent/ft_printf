@@ -6,19 +6,14 @@
 /*   By: odessein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 11:58:51 by odessein          #+#    #+#             */
-/*   Updated: 2022/05/25 15:56:33 by odessein         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:08:01 by odessein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-#include <stdio.h>
-//ft_calc_number_sizeS
-//ft_calc_hexa_size
-	//CARE OF SIGN if negative compte it in size
-	//Precison need to be calc too
 
 void	ft_manage_int(char *str, int value, int *ret_val, t_Bool *not_end)
 {
-	int	size;
+	int			size;
 	t_useful	need_add;
 
 	*not_end = TRUE;
@@ -44,39 +39,36 @@ void	ft_manage_int(char *str, int value, int *ret_val, t_Bool *not_end)
 	ft_apply_minus_sign(str, size, ret_val, &need_add);
 }
 
-void	ft_manage_hexa(char *str, unsigned int val, int *ret_val, t_Bool *not_end)
+void	ft_manage_hexa(char *str, unsigned int val, int *r_v, t_Bool *not_end)
 {
-	int		size;
-	char	u_or_l;
-	int		i;
+	int			size;
+	char		u_or_l;
+	int			i;
 	t_useful	need_add;
 
 	i = 0;
-	ft_init_struc(&need_add);
-	while (str[i] != 'x' && str[i] != 'X' && str[i] != '\0' )
-		i++;
+	i = ft_manage_hexa_v1(i, &need_add, not_end, str);
 	if (str[i] == '\0')
 		return ;
 	u_or_l = str[i];
-	*not_end = TRUE;
 	size = ft_calc_hexa_size(str, (unsigned long) val);
-	ft_apply_rules_before(str, size, &need_add, ret_val);
-	ft_precision(str, size, &need_add, ret_val);
+	ft_apply_rules_before(str, size, &need_add, r_v);
+	ft_precision(str, size, &need_add, r_v);
 	if (ft_check_dieze(str, 0) && val != 0)
 	{
-		ft_putchar('0', ret_val);
-		ft_putchar(u_or_l, ret_val);
+		ft_putchar('0', r_v);
+		ft_putchar(u_or_l, r_v);
 	}
 	if (u_or_l == 'X' && !ft_check_novalue(str, val))
-		ft_putnbr_hexa_x(val, ret_val);
+		ft_putnbr_hexa_x(val, r_v);
 	else if (u_or_l == 'x' && !ft_check_novalue(str, val))
-		ft_putnbr_hexa(val, ret_val);
-	ft_apply_minus_sign(str, size, ret_val, &need_add);
+		ft_putnbr_hexa(val, r_v);
+	ft_apply_minus_sign(str, size, r_v, &need_add);
 }
 
 void	ft_manage_string(char *str, char *value, int *ret_val, t_Bool *not_end)
 {
-	int	size;
+	int			size;
 	t_useful	need_add;
 
 	*not_end = TRUE;
@@ -104,10 +96,10 @@ void	ft_manage_string(char *str, char *value, int *ret_val, t_Bool *not_end)
 void	ft_manage_addr(char *str, void *addr, int *ret_val, t_Bool *not_end)
 {
 	unsigned long	addr_conv;
-	int	size;
-	t_useful	need_add;
+	int				size;
+	t_useful		need_add;
 
-    	*not_end = TRUE;
+	*not_end = TRUE;
 	ft_init_struc(&need_add);
 	if (!addr)
 	{	
