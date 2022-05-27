@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
+#include <stdio.h>
 //IDEA : Maybe just make 1 function take the char to find in params !
 t_Bool	ft_check_addsign(char *str)
 {
@@ -22,13 +23,14 @@ t_Bool	ft_check_addsign(char *str)
 	return (FALSE);
 }
 
-t_Bool	ft_check_dieze(char *str, int index)
+t_Bool	ft_check_dieze(char *str)
 {
-	while (str[index])
+
+	while (*str && (*str == '%' || !ft_check_end(*str)))
 	{
-		if (str[index] == '#')
+		if (*str == '#')
 			return (TRUE);
-		index++;
+		str++;
 	}
 	return (FALSE);
 }
@@ -40,13 +42,16 @@ t_Bool	ft_is_digit(char c)
 	return (FALSE);
 }
 
-t_Bool	ft_check_space(char *str, int index)
+t_Bool	ft_check_space(char *str)
 {
-	while (str[index])
+	while (*str && (*str == '%' || !ft_check_end(*str)))
 	{
-		if (str[index] == '#')
+		if (*str != '0' && ft_is_digit(*str) && *(str - 1) != '.' 
+			&& !ft_is_digit(*(str - 1)))
+		{
 			return (TRUE);
-		index++;
+		}
+		str++;
 	}
 	return (FALSE);
 }

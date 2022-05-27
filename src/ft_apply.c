@@ -46,7 +46,7 @@ void	ft_apply_minus_sign(char *str, int size, int *ret_val, t_useful *neg)
 	int	i;
 
 	i = 1;
-	if (ft_check_space(str, 0))
+	if (ft_check_dieze(str))
 		size++;
 	while (!(ft_check_end(str[i])))
 	{
@@ -101,8 +101,6 @@ int	ft_disp_zero(char *str, int size, int index, int *ret_val)
 		index_cursor++;
 	if (size == 0)
 		return (index_cursor);
-	if (ft_check_space(str, index))
-		size++;
 	nb_of_zero = ft_atoi(&str[index]) - size;
 	nb_of_zero = ft_check_precision(str, nb_of_zero, size);
 	while (nb_of_zero > 0)

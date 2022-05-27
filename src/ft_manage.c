@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-
+#include <stdio.h>
 void	ft_manage_int(char *str, int value, int *ret_val, t_Bool *not_end)
 {
 	int			size;
@@ -46,19 +46,20 @@ void	ft_manage_hexa(char *str, unsigned int val, int *r_v, t_Bool *not_end)
 	int			i;
 	t_useful	need_add;
 
-	i = 0;
-	i = ft_manage_hexa_v1(i, &need_add, not_end, str);
+	ft_manage_hexa_v1(&i, &need_add, not_end, str);
 	if (str[i] == '\0')
 		return ;
 	u_or_l = str[i];
 	size = ft_calc_hexa_size(str, (unsigned long) val);
-	ft_apply_rules_before(str, size, &need_add, r_v);
-	ft_precision(str, size, &need_add, r_v);
-	if (ft_check_dieze(str, 0) && val != 0)
-	{
-		ft_putchar('0', r_v);
-		ft_putchar(u_or_l, r_v);
-	}
+	if (ft_check_dieze(str) && val != 0 && ft_check_space(str))
+		ft_apply_rules_before(str, size, &need_add, r_v);
+	if (ft_check_dieze(str) && val != 0)
+			ft_sharp(u_or_l, r_v);
+	if (ft_check_dieze(str) && val != 0 && !ft_check_space(str))
+		ft_apply_rules_before(str, size, &need_add, r_v);
+	if (!ft_check_dieze(str))
+		ft_apply_rules_before(str, size, &need_add, r_v);
+	ft_precision(str, size, &need_add, r_v); 
 	if (u_or_l == 'X' && !ft_check_novalue(str, val))
 		ft_putnbr_hexa_x(val, r_v);
 	else if (u_or_l == 'x' && !ft_check_novalue(str, val))

@@ -64,13 +64,11 @@ int	ft_calc_hexa_size(char *str, unsigned long value)
 	long		val;
 	int			size;
 	long		index;
-	int			i;
 
 	if (ft_check_novalue(str, value))
 		return (0);
 	index = ft_calc_number_size((unsigned long) value, str);
 	val = value;
-	i = 0;
 	size = 0;
 	if (val == 0)
 		return (size + 1);
@@ -82,9 +80,8 @@ int	ft_calc_hexa_size(char *str, unsigned long value)
 		size++;
 		index--;
 	}
-	while (str[i] != '\0')
-		if (str[i++] == '#')
-			size = size + 2;
+	if (ft_check_zero_or_space(str) && ft_check_dieze(str))
+		size = size + 2;
 	return (size);
 }
 

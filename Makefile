@@ -16,7 +16,7 @@ HEADER_DIR = ./includes/
 HEADER_FILE = ft_printf.h
 HEADER = $(HEADER_DIR)$(HEADER_FILE)
 CC = gcc -Wall -Werror -Wextra
-SRC = $(SRC_DIR)ft_atoi.c $(SRC_DIR)ft_loop.c $(SRC_DIR)ft_manage.c $(SRC_DIR)ft_size.c $(SRC_DIR)ft_apply.c $(SRC_DIR)ft_manage_2.c $(SRC_DIR)ft_printf.c $(SRC_DIR)ft_utils.c $(SRC_DIR)ft_str_utils.c $(SRC_DIR)ft_add.c $(SRC_DIR)ft_less_line.c
+SRC = $(_SRC_DIR)ft_atoi.c $(SRC_DIR)ft_loop.c $(SRC_DIR)ft_manage.c $(SRC_DIR)ft_size.c $(SRC_DIR)ft_apply.c $(SRC_DIR)ft_manage_2.c $(SRC_DIR)ft_printf.c $(SRC_DIR)ft_utils.c $(SRC_DIR)ft_str_utils.c $(SRC_DIR)ft_add.c $(SRC_DIR)ft_less_line.c
 OBJ = $(OBJ_DIR)ft_atoi.o $(OBJ_DIR)ft_loop.o $(OBJ_DIR)ft_manage.o $(OBJ_DIR)ft_size.o $(OBJ_DIR)ft_apply.o $(OBJ_DIR)ft_manage_2.o $(OBJ_DIR)ft_printf.o $(OBJ_DIR)ft_utils.o $(OBJ_DIR)ft_str_utils.o $(OBJ_DIR)ft_add.o $(OBJ_DIR)ft_less_line.o
 
 all : $(NAME)
@@ -33,7 +33,7 @@ clean :
 	rm -f $(OBJ)
 
 fclean : clean
-	rm -f $(NAME)
+	rm -f $(NAME) a.out
 
 re : fclean all
 

@@ -14,12 +14,26 @@
 
 static inline char	*ft_brows_1(char *str, int *ret_val)
 {
+	int	i;
+
+	i = 0;
 	if (str[1] == '%')
 	{
 		ft_putchar('%', ret_val);
 		if (*ret_val == -1)
 			return (str + ft_strlen(str) - 1);
 		return (str + 1);
+	}
+	while (str[i] && (str[i] == '%' || !ft_check_end(str[i])))
+		i++;
+	if (i == (int) ft_strlen(str) && !ft_check_end(str[i]))
+	{
+		i = 0;
+		while (str[i] && (str[i] == '%' || !ft_check_end(str[i])))
+			ft_putchar(str[i++], ret_val);
+		*ret_val = -1;
+		return (0);
+			
 	}
 	return (0);
 }

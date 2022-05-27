@@ -46,9 +46,11 @@ t_Bool	ft_check_novalue(char *str, unsigned int value);
 t_Bool	ft_check_precision_or_not(char *str);
 void	ft_disp_space_neg(char *str, int size, int space, int *ret_val);
 void	ft_init_struc(t_useful *init);
-int		ft_manage_hexa_v1(int i, t_useful *sign, t_Bool *not_end, char *str);
+void		ft_manage_hexa_v1(int *i, t_useful *sign, t_Bool *not_end, char *str);
 int		ft_space(char *str, int *i, int *ret_val, int size);
 t_Bool	ft_space_at_start(char *str, int *i, t_useful *sign, int *ret_val);
+t_Bool ft_check_zero_or_space(char *str);
+void	ft_sharp(char x, int *r_v);
 
 int		ft_atoi(const char *nptr);
 size_t	ft_strlen(const char *s);
@@ -70,9 +72,9 @@ void	ft_manage_char(char *str, char c, int *ret_val, t_Bool *not_end);
 void	ft_manage_unsigned(char *str, unsigned int val, int *r_v, t_Bool *n_en);
 
 t_Bool	ft_check_addsign(char *str);
-t_Bool	ft_check_dieze(char *str, int index);
+t_Bool	ft_check_dieze(char *str);
 t_Bool	ft_is_digit(char c);
-t_Bool	ft_check_space(char *str, int index);
+t_Bool	ft_check_space(char *str);
 
 void	ft_putnstr(char *str, int size, int *ret_val);
 void	ft_putnbr(long nb, int *ret_val);

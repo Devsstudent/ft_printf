@@ -22,3 +22,9 @@ int	ft_printf(const char *string, ...)
 	va_end(ap);
 	return (ret_val);
 }
+
+void	ft_sharp(char x, int *r_v)
+{
+	ft_putchar('0', r_v);
+	ft_putchar(x, r_v);
+}

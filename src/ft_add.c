@@ -71,11 +71,25 @@ void	ft_init_struc(t_useful *init)
 	(*init).need_neg = FALSE;
 }
 
-int	ft_manage_hexa_v1(int i, t_useful *sign, t_Bool *not_end, char *str)
+void	ft_manage_hexa_v1(int *i, t_useful *sign, t_Bool *not_end, char *str)
 {
+	*i = 0;
 	*not_end = TRUE;
 	ft_init_struc(sign);
-	while (str[i] != 'x' && str[i] != 'X' && str[i] != '\0')
-		i++;
-	return (i);
+	while (str[*i] != 'x' && str[*i] != 'X' && str[*i] != '\0')
+		(*i)++;
+}
+
+t_Bool ft_check_zero_or_space(char *str)
+{
+	while (*str && (*str == '%' || !ft_check_end(*str)))
+	{
+		if (*str == 0 && !ft_is_digit(*(str - 1)))
+			return (TRUE);
+		if (ft_is_digit(*str) && *(str - 1) != '.' 
+			&& !ft_is_digit(*(str - 1)))
+			return (TRUE);
+		str++;
+	}
+	return (FALSE);
 }
